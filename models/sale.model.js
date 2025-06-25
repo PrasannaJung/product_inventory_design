@@ -2,11 +2,6 @@ import mongoose from "mongoose";
 
 export const SalesSchema = new mongoose.Schema(
   {
-    productId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
-    },
     clientId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -15,7 +10,32 @@ export const SalesSchema = new mongoose.Schema(
     clientName: {
       type: String,
     },
-    unitPrice: { type: String },
+    products: [
+      {
+        productId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        productName: {
+          type: String,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+          min: 1,
+        },
+        unitCost: {
+          type: Number,
+          required: true,
+        },
+        discountRate: { type: Number },
+        subtotal: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
 
     priceAtSales: {
       type: Number,

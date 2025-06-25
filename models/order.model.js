@@ -22,12 +22,12 @@ export const OrderSchema = new mongoose.Schema(
           required: true,
           min: 1,
         },
-        unitPrice: {
+        unitCost: {
           type: Number,
           required: true,
         },
         discountRate: { type: Number },
-        totalProductPrice: {
+        subtotal: {
           type: Number,
           required: true,
         },
