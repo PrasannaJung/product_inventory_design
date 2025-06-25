@@ -8,8 +8,8 @@ export const UserSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["supplier", "admin", "client"],
-      default: "Client",
+      enum: ["supplier", "admin", "customer"],
+      default: "customer",
     },
     contact: {
       email: String,
@@ -25,3 +25,7 @@ export const UserSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+const User = mongoose.model("User", UserSchema);
+
+export default User;

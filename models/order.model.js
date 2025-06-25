@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export const OrderSchema = new mongoose.Schema(
   {
-    clientId: {
+    customerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,

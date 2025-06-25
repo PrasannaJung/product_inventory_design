@@ -14,15 +14,13 @@ export const ProductSchema = new mongoose.Schema({
     amount: { type: Number, required: true },
     currency: { type: String, default: "NPR" },
   },
+  unit: { type: String }, // e.g kg, litre, pieces, etc
   tags: [String],
-  // clientId: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  //   required: true,
-  // },
-  // clientName: {
-  //   type: String,
-  // },
+  store: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Seller",
+    required: true,
+  },
   categories: [{ type: CategorySchema }],
   recentReviews: [
     {
@@ -31,6 +29,18 @@ export const ProductSchema = new mongoose.Schema({
     },
   ],
   reviewsCount: {
+    type: Number,
+  },
+  rating: {
+    type: {
+      ratedBy: { type: mongoose.Schema.Types.ObjectId },
+      rating: { type: Number, min: 0 },
+    },
+  },
+  totalRatings: {
+    type: Number,
+  },
+  avgRating: {
     type: Number,
   },
   attributes: {
@@ -55,20 +65,20 @@ export const ProductSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  salesDetail: { onSale: Boolean, discountRate: Number, onSalePrice: Number },
   totalStock: {
     type: Number,
     default: 0,
     min: 0,
   },
-
   recentPurchasers: [
     {
-      clientId: {
+      customerId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
       },
-      clientName: { type: String },
+      customerName: { type: String },
       totalUnits: Number,
       lastPurchaseDate: { type: Date, default: Date.now, required: true },
     },
