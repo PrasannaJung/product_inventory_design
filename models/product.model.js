@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { ReviewSchema } from "./review.model.js";
 import { CategorySchema } from "./category.model.js";
 
-const ProductSchema = new mongoose.Schema({
+export const ProductSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -14,14 +14,15 @@ const ProductSchema = new mongoose.Schema({
     amount: { type: Number, required: true },
     currency: { type: String, default: "NPR" },
   },
-  clientId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  clientName: {
-    type: String,
-  },
+  tags: [String],
+  // clientId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "User",
+  //   required: true,
+  // },
+  // clientName: {
+  //   type: String,
+  // },
   categories: [{ type: CategorySchema }],
   recentReviews: [
     {
@@ -32,13 +33,11 @@ const ProductSchema = new mongoose.Schema({
   reviewsCount: {
     type: Number,
   },
-  attributes: [
-    {
-      key: { type: String, required: true },
-      value: { type: mongoose.Schema.Types.Mixed, required: true },
-    },
-  ],
-  data: {},
+  attributes: {
+    type: Map,
+    of: mongoose.Schema.Types.Mixed,
+  },
+
   images: {
     type: [
       {

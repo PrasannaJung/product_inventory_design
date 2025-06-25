@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const ClientSchema = new mongoose.Schema(
+export const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -8,6 +8,7 @@ export const ClientSchema = new mongoose.Schema(
     },
     type: {
       type: String,
+      enum: ["supplier", "admin", "client"],
       default: "Client",
     },
     contact: {
@@ -15,6 +16,7 @@ export const ClientSchema = new mongoose.Schema(
       phone: String,
     },
     address: {
+      street: String,
       city: String,
       country: String,
     },

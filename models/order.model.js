@@ -22,13 +22,21 @@ export const OrderSchema = new mongoose.Schema(
           required: true,
           min: 1,
         },
-        price: {
+        unitPrice: {
+          type: Number,
+          required: true,
+        },
+        discountRate: { type: Number },
+        totalProductPrice: {
           type: Number,
           required: true,
         },
       },
     ],
-    totalAmount: {
+    shippingCost: {
+      type: Number,
+    },
+    totalPrice: {
       type: Number,
       required: true,
       min: 0,
@@ -61,7 +69,11 @@ export const OrderSchema = new mongoose.Schema(
       enum: ["pending", "paid", "failed", "refunded"],
       default: "pending",
     },
-    paymentMethod: {},
+    paymentMethod: {
+      type: "String",
+      enum: ["Cash", "Fonepay"],
+      default: "Cash",
+    },
   },
   { timestamps: true }
 );

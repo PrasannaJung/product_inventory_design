@@ -1,50 +1,90 @@
 import mongoose from "mongoose";
 
-export const PurchaseSchema = new mongoose.Schema(
+export const SourcingSchema = new mongoose.Schema(
   {
-    productId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
-    },
+    products: [
+      {
+        productId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        productTitle: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+          min: 1,
+        },
+        unitCost: {
+          type: Number,
+          required: true,
+          min: 0,
+        },
+        subtotal: {
+          type: Number,
+          required: true,
+          min: 0,
+        },
+      },
+    ],
     supplierId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    clientId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    clientName: {
+    supplierName: {
       type: String,
     },
-    quantity: {
+
+    totalAmount: {
       type: Number,
       required: true,
-      min: 1,
-    },
-    priceAtPurchase: {
-      type: Number,
-      required: true,
+      min: 0,
     },
     purchaseDate: {
       type: Date,
       default: Date.now,
     },
-    orderId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Order",
+    currency: {
+      type: String,
+      default: "NPR",
       required: true,
     },
-    billing: {
-      finalAmount: Number,
-      invoice: String,
-      remarks: String,
+    status: {
+      type: String,
+      enum: [
+        "pending",
+        "ordered",
+        "received",
+        "partially_received",
+        "cancelled",
+      ],
+      default: "pending",
+    },
+    invoiceNumber: {
+      type: String,
+      trim: true,
+    },
+    paymentStatus: {
+      type: String,
+      enum: ["unpaid", "partially_paid", "paid", "refunded"],
+      default: "unpaid",
+    },
+    notes: {
+      type: String,
+      trim: true,
+    },
+    receivedIntoWarehouse: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Inventory",
+      required: false,
     },
   },
   { timestamps: true }
 );
 
-export const Purchase = mongoose.model("Purchase", PurchaseSchema);
+export const Purchase = mongoose.model("PurchaseSchema", PurchaseSchema);
